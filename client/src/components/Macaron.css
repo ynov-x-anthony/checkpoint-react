@@ -1,0 +1,194 @@
+.macaron-container {
+  --macaron-size: 200px;
+  --macaron-basis: calc(var(--macaron-size) / 2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--macaron-size);
+  height: var(--macaron-size);
+}
+
+.macaron {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  filter: drop-shadow(1px 1px 1px var(--main-color));
+}
+
+.accessory {
+  --image-size: 42%;
+  width: var(--image-size);
+  aspect-ratio: 1;
+  top: -12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  position: absolute;
+  filter: drop-shadow(1px 1px 1px var(--dark));
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.accessory.cherry {
+  background-image: url("../assets/cherry.png");
+}
+
+.accessory.chocolate {
+  background-image: url("../assets/chocolate.png");
+}
+
+.accessory.christmas-candy {
+  background-image: url("../assets/christmas-candy.png");
+}
+
+.accessory.donut {
+  background-image: url("../assets/donut.png");
+}
+
+.accessory.agorski {
+  background-image: url("../assets/agorski.svg");
+}
+
+.shell {
+  width: var(--macaron-basis);
+  background-color: var(--macaron-basis-color);
+  border: 2px solid var(--dark);
+  box-shadow: 10px 0 inset var(--light-shadow);
+  position: relative;
+  z-index: 2;
+}
+
+.shell-top {
+  height: calc(var(--macaron-basis) * 0.55);
+  border-radius: 50% 50% 10% 10% / 75% 75% 15% 15%;
+  margin-bottom: -3px;
+}
+
+.shell-bottom {
+  height: calc(var(--macaron-basis) * 0.42);
+  border-radius: 10% 10% 45% 45% / 15% 15% 55% 55%;
+  margin-top: -3px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 12%;
+}
+
+.filling {
+  display: flex;
+  width: calc(var(--macaron-basis) * 1.14);
+  height: 16px;
+  z-index: 1;
+  border-left: 2px solid var(--dark);
+  border-right: 2px solid var(--dark);
+  border-radius: 40%;
+  overflow: hidden;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
+}
+
+.filling-color {
+  flex: 1;
+}
+
+.face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 78%;
+  height: 60%;
+}
+
+.eyes {
+  width: 68%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eyes > div {
+  --eye-size: 11px;
+  width: var(--eye-size);
+  height: var(--eye-size);
+  border-radius: 50%;
+  background-color: var(--dark);
+  position: relative;
+  transition: height 0.15s ease, border-radius 0.15s ease;
+}
+
+.eyes > div::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: var(--light);
+}
+
+.eyes > div:hover {
+  height: 2px;
+  border-radius: 2px;
+}
+.eyes > div:hover::before {
+  display: none;
+}
+
+.sad {
+  --mouth-rotation: 180deg;
+}
+
+.mouth {
+  --mouth-size: 50%;
+  display: flex;
+  justify-content: center;
+  width: var(--mouth-size);
+  height: calc(var(--mouth-size) / 2.2);
+  border-bottom: 3px solid var(--dark);
+  border-radius: 0 0 50% 50%;
+  transform: rotate(var(--mouth-rotation, 0));
+}
+
+.mouth:hover::before {
+  content: "";
+  transform: translateY(calc(100% + 2px));
+  width: 50%;
+  height: 100%;
+  background-color: var(--main-color);
+  border-radius: 0 0 var(--mouth-size) var(--mouth-size);
+}
+
+.cheeks {
+  position: absolute;
+  top: 48%;
+  left: 4%;
+  width: 92%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.cheeks > div {
+  width: 14px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ff9d9d;
+  opacity: 0.55;
+}
+
+div.macaron-name {
+  color: var(--main-color);
+  text-shadow: 1px 1px 1px var(--shadow);
+  text-transform: capitalize;
+  transform: rotate(-2deg);
+  text-align: center;
+}
+
+.macaron-name:empty {
+  display: none;
+}
