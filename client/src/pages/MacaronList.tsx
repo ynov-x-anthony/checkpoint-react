@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Macaron from "../components/Macaron";
 
 /* ************************************************************************* */
@@ -36,7 +37,54 @@ const sampleMacarons: MacaronArray = [
 /* ************************************************************************* */
 
 function MacaronList() {
+
+	type Macaron = {
+		id: number,
+		accessory_id: number
+		color1: string,
+		color2: string,
+		color3: string,
+		name: string
+
+	}
+	const URL = "http://localhost:3310/api/macarons"
 	// Step 1: get all macarons
+	const [data, setData] = useState<Macaron[]>([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState<string | null>(null)
+
+	useEffect(() => {
+		const controller = new AbortController()
+
+		async function getMacarons() {
+			try {
+				const response = await fetch(URL, { signal: controller.signal })
+
+				if (!response.ok) {
+					throw new Error(`Error, status : ${response.status}`)
+				}
+
+				const result: Macaron[] = await response.json()
+				setData(result)
+			} catch (err) {
+				if (err instanceof DOMException && err.name === "AbortError") {
+					return
+				}
+
+				setError(
+					err instanceof Error ? err.message :"Unable to get macarons data"
+				)
+			} finally {
+				if (!controller.signal.aborted) {
+					setLoading(false)
+				}
+			}
+		}
+
+		getMacarons()
+
+		return () => controller.abort()
+	}, [])
 
 	// Step 3: get all accessories
 
@@ -45,6 +93,9 @@ function MacaronList() {
 	return (
 		<>
 			<h1>My macarons</h1>
+			{loading && <p>Macarons are loading...</p>}
+			{error && <p>Error : {error}</p>}
+			{data && <p>data fetched (test)</p>}
 			<form className="center">
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
