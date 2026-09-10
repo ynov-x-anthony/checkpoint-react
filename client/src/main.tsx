@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 
 import MacaronList from "./pages/MacaronList";
+import MacaronDetails from "./pages/MacaronDetails";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/macarons",
         element: <MacaronList />,
+      },
+      {
+        path: "/macarons/:id",
+        element: <MacaronDetails />,
       },
     ],
   },
