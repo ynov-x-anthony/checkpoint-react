@@ -35,8 +35,27 @@ const sampleMacarons: MacaronArray = [
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
+import { useEffect, useState } from "react";
+
+
 function MacaronList() {
 	// Step 1: get all macarons
+
+	const [macarons, setMacarons] = useState(null);
+
+	useEffect(() => {
+		async function load() {
+ 			const res = await fetch("http://localhost:3310/api/macarons");
+ 			const data = await res.json();
+ 		setMacarons(data);
+ 		}
+ 		load();
+		return
+	}, []);
+
+	useEffect(() => {
+    	console.info("Les macarons ont été chargés");
+  }, [macarons]);
 
 	// Step 3: get all accessories
 
