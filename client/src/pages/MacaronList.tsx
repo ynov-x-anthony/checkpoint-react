@@ -1,70 +1,61 @@
-import Macaron from "../components/Macaron";
+import { useEffect, useState } from "react";
 
-/* ************************************************************************* */
-const sampleMacarons: MacaronArray = [
-	{
-		id: 10,
-		accessory_id: "4",
-		accessory: "agorski",
-		color1: "blue",
-		color2: "white",
-		color3: "red",
-		name: "France",
-	},
-	{
-		id: 11,
-		accessory_id: "4",
-		accessory: "agorski",
-		color1: "yellow",
-		color2: "red",
-		color3: "black",
-		name: "Germany",
-	},
-	{
-		id: 27,
-		accessory_id: "5",
-		accessory: "christmas-candy",
-		color1: "yellow",
-		color2: "blue",
-		color3: "blue",
-		name: "Sweden",
-	},
-];
-
-/* you can use sampleMacarons if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
+// Step 2 : import à utiliser lors de l'affichage des macarons
+// import Macaron from "../components/Macaron";
 
 function MacaronList() {
-	// Step 1: get all macarons
+  // Step 1: get all macarons
+  const [macarons, setMacarons] = useState<MacaronArray>([]);
 
-	// Step 3: get all accessories
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/macarons`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
 
-	// Step 5: create filter state
+        return response.json();
+      })
+      .then((data: MacaronArray) => {
+        setMacarons(data);
+        console.info("Macarons récupérés :", data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération :", error);
+      });
+  }, []);
 
-	return (
-		<>
-			<h1>My macarons</h1>
-			<form className="center">
-				<label htmlFor="macaron-select">
-					{/* Step 5: use a controlled component for select */}
-					Filter by{" "}
-					<select id="macaron-select">
-						<option value="">---</option>
-						{/* Step 4: add an option for each accessory */}
-					</select>
-				</label>
-			</form>
-			<ul className="macaron-list" id="macaron-list">
-				{/* Step 2: repeat this block for each macaron */}
-				{/* Step 5: filter macarons before repeating */}
-				<li className="macaron-item">
-					<Macaron data={sampleMacarons[0]} />
-				</li>
-				{/* end of block */}
-			</ul>
-		</>
-	);
+  // Step 3: get all accessories
+
+  // Step 5: create filter state
+
+  return (
+    <>
+      <h1>My macarons</h1>
+
+      <p className="center">
+        {macarons.length} macarons récupérés.
+      </p>
+
+      <form className="center">
+        <label htmlFor="macaron-select">
+          {/* Step 5: use a controlled component for select */}
+          Filter by{" "}
+          <select id="macaron-select">
+            <option value="">---</option>
+
+            {/* Step 4: add an option for each accessory */}
+          </select>
+        </label>
+      </form>
+
+      <ul className="macaron-list" id="macaron-list">
+        {/* Step 2: repeat this block for each macaron */}
+
+        {/* Step 5: filter macarons before repeating */}
+      </ul>
+    </>
+  );
 }
 
 export default MacaronList;
