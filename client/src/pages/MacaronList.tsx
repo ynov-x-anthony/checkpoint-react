@@ -27,15 +27,19 @@ function MacaronList() {
 	}, []);
 
 	// Step 5: create filter state
+	const [selectedAccessory, setSelectedAccessory] = useState("");
 
 	return (
 		<>
 			<h1>My macarons</h1>
 			<form className="center">
 				<label htmlFor="macaron-select">
-					{/* Step 5: use a controlled component for select */}
 					Filter by{" "}
-					<select id="macaron-select">
+					<select
+						id="macaron-select"
+						value={selectedAccessory}
+						onChange={(event) => setSelectedAccessory(event.target.value)}
+					>
 						<option value="">---</option>
 						{accessories.map((accessory) => (
 							<option value={accessory.id} key={accessory.id}>
@@ -46,12 +50,17 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{/* Step 5: filter macarons before repeating */}
-				{macarons.map((macaron) => (
-					<li className="macaron-item" key={macaron.id}>
-						<Macaron data={macaron} />
-					</li>
-				))}
+				{macarons
+					.filter(
+						(macaron) =>
+							selectedAccessory === "" ||
+							macaron.accessory_id === selectedAccessory,
+					)
+					.map((macaron) => (
+						<li className="macaron-item" key={macaron.id}>
+							<Macaron data={macaron} />
+						</li>
+					))}
 			</ul>
 		</>
 	);
