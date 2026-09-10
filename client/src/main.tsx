@@ -10,6 +10,7 @@ import App from "./App";
 import MacaronList from "./pages/MacaronList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
+import MacaronDetails from "./pages/MacaronDetails";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,16 @@ const router = createBrowserRouter([
       {
         path: "/macarons",
         element: <MacaronList />,
+      },
+      {
+        path: "/macarons/:id",
+        element: <MacaronDetails />,
+        loader: async ({ params }) => {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/macarons/${params.id}`,
+          );
+          return response.json();
+        },
       },
     ],
   },
