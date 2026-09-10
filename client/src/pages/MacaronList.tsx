@@ -68,8 +68,11 @@ function MacaronList() {
 					{/* Step 5: use a controlled component for select */}
 					Filter by{" "}
 					<select id="macaron-select">
-						<option value="">---</option>
-						{/* Step 4: add an option for each accessory */}
+						<option value="1">Cherry</option>
+						<option value="2">Donut</option>
+						<option value="3">Chocolate</option>
+						<option value="4">agorski.dev</option>
+						<option value="5">Christmas Candy</option>
 					</select>
 				</label>
 			</form>
