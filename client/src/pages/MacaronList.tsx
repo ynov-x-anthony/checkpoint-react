@@ -36,9 +36,12 @@ const sampleMacarons: MacaronArray = [
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
+type AccessoriesType = {id:number, name:string, slug:string}[]
+
 function MacaronList() {
 
-	const [macarons, setMacarons] = useState([])
+	const [macarons, setMacarons] = useState([]);
+	const [accessories, setAccessories] = useState<AccessoriesType>([]);
 
 	useEffect(() => {
     fetch(import.meta.env.VITE_API_URL + "/api/macarons ")
@@ -46,9 +49,14 @@ function MacaronList() {
         .then((data) => setMacarons(data));
     }, []);
 
+	useEffect(() => {
+    fetch(import.meta.env.VITE_API_URL + "/api/accessories ")
+        .then((response) => response.json())
+        .then((data) => setAccessories(data));
+    }, []);
+
 	console.log(macarons)
-	
-	// Step 3: get all accessories
+	console.log(accessories)
 
 	// Step 5: create filter state
 
