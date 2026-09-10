@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router"
 import Macaron from "../components/Macaron";
 
 function MacaronList() {
 
-	const URL = "http://localhost:3310/api/macarons"
-	const accessoriesURL = "http://localhost:3310/api/accessories"
+	const URL = import.meta.env.VITE_API_URL + "/api/macarons"
+	const accessoriesURL = import.meta.env.VITE_API_URL + "/api/accessories"
 
 	const [data, setData] = useState<Macaron[]>([])
 	const [loading, setLoading] = useState(true)
@@ -66,7 +67,7 @@ function MacaronList() {
 					Filter by{filter}
 					<select onChange={(event) => setFilter(event.target.value)} id="macaron-select">
 						{accData.map((accessory) => (
-							<option key={accessory.id} value={accessory.slug}>{accessory.name}</option>
+							<option key={accessory.id} value={accessory.id}>{accessory.name}</option>
 						))}
 					</select>
 				</label>
@@ -74,14 +75,18 @@ function MacaronList() {
 			<ul className="macaron-list" id="macaron-list">
 				{data.map((macaron: Macaron) => (
 					filter === "" ? (
-						<li key={macaron.id} className="macaron-item">
-							<Macaron data={macaron} />
-						</li> 
-					) : (
-						macaron.accessory === filter && (
+						<Link to={"/macarons/" + macaron.id}>
 							<li key={macaron.id} className="macaron-item">
 								<Macaron data={macaron} />
 							</li> 
+						</Link>
+					) : (
+						macaron.accessory_id === filter && (
+							<Link to={"/macarons/" + macaron.id}>
+								<li key={macaron.id} className="macaron-item">
+									<Macaron data={macaron} />
+								</li>
+							</Link>
 						)
 					)
 				))}
