@@ -13,35 +13,7 @@ type MacaronType = {
 };
 
 /* ************************************************************************* */
-const sampleMacarons = [
-    {
-        id: 10,
-        accessory_id: "4",
-        accessory: "agorski",
-        color1: "blue",
-        color2: "white",
-        color3: "red",
-        name: "France",
-    },
-    {
-        id: 11,
-        accessory_id: "4",
-        accessory: "agorski",
-        color1: "yellow",
-        color2: "red",
-        color3: "black",
-        name: "Germany",
-    },
-    {
-        id: 27,
-        accessory_id: "5",
-        accessory: "christmas-candy",
-        color1: "yellow",
-        color2: "blue",
-        color3: "blue",
-        name: "Sweden",
-    },
-];
+
 /* ************************************************************************* */
 
 function MacaronList() {
@@ -78,15 +50,22 @@ function MacaronList() {
     }, []);
     console.info("Vérification Étape 3 :", accessories);
 	// Step 5: create filter state
-
+	const [selectedAccessory, setSelectedAccessory] = useState<string>("");
+    const filteredMacarons = selectedAccessory
+        ? macarons.filter((macaron) => macaron.accessory_id === selectedAccessory)
+        : macarons;
 	return (
 		<>
 			<h1>My macarons</h1>
 			<form className="center">
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
-					Filter by{" "}
-					<select id="macaron-select">
+					FFilter by{" "}
+                    <select 
+                        id="macaron-select"
+                        value={selectedAccessory}
+                        onChange={(e) => setSelectedAccessory(e.target.value)}
+                    >
 						<option value="">---</option>
 						{/* Step 4: add an option for each accessory */}
 						{accessories.map((accessory) => (
@@ -98,16 +77,12 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{/* Step 2: repeat this block for each macaron */}
-				{macarons.map((macaron) => (
-                    <li key={macaron.id} className="macaron-item">
-                        <Macaron data={macaron} />
-                    </li>
-                ))}
 				{/* Step 5: filter macarons before repeating */}
-				<li className="macaron-item">
-					<Macaron data={sampleMacarons[0]} />
-				</li>
+				{filteredMacarons.map((macaron) => (
+    				<li key={macaron.id} className="macaron-item">
+        				<Macaron data={macaron} />
+    				</li>
+				))}
 				{/* end of block */}
 			</ul>
 		</>
