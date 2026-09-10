@@ -1,4 +1,5 @@
 import Macaron from "../components/Macaron";
+import { useEffect, useState } from "react";
 
 /* ************************************************************************* */
 const sampleMacarons: MacaronArray = [
@@ -37,9 +38,35 @@ const sampleMacarons: MacaronArray = [
 
 function MacaronList() {
 	// Step 1: get all macarons
+	const [macarons, setMacarons] = useState<MacaronArray>([]);
+
+	useEffect(() => {
+		fetch(`${import.meta.env.VITE_API_URL}/api/macarons`)
+			.then((response) => response.json())
+			.then((data) => {
+				console.info("Macarons:", data);
+				setMacarons(data);
+			})
+			.catch((error) => console.error("Error:", error));
+	}, []);
 
 	// Step 3: get all accessories
+	type AccessoryArray = {
+		id: number;
+		name: string;
+	}[];
 
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
+	useEffect(() => {
+		fetch(`${import.meta.env.VITE_API_URL}/api/accessories`)
+			.then((response) => response.json())
+			.then((data) => {
+				console.info("Accessories:", data);
+				setAccessories(data);
+			})
+			.catch((error) => console.error("Error:", error));
+	}, []);
+	
 	// Step 5: create filter state
 
 	return (
@@ -51,12 +78,24 @@ function MacaronList() {
 					Filter by{" "}
 					<select id="macaron-select">
 						<option value="">---</option>
-						{/* Step 4: add an option for each accessory */}
+						{
+							accessories.map((accessory) => (
+								<option key={accessory.id} value={accessory.id}>
+									{accessory.name}
+								</option>
+							))
+						}
 					</select>
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{/* Step 2: repeat this block for each macaron */}
+				{
+					macarons.map((macaron) => (
+						<li key={macaron.id}>
+							<Macaron data={macaron} />
+						</li>
+					))
+				}
 				{/* Step 5: filter macarons before repeating */}
 				<li className="macaron-item">
 					<Macaron data={sampleMacarons[0]} />
