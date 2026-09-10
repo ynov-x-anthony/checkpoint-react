@@ -47,7 +47,6 @@ function MacaronList() {
     }, []);
 
 	console.log(macarons)
-
 	
 	// Step 3: get all accessories
 
