@@ -1,6 +1,19 @@
 import Macaron from "../components/Macaron";
+import { useEffect, useState } from "react";
 
+type MacaronData = {
+  id: number;
+  accessory_id: string;
+  accessory: string;
+  color1: string;
+  color2: string;
+  color3: string;
+  name: string;
+};
+
+const MACARON_URL = `${import.meta.env.VITE_API_URL}/api/macarons`;
 /* ************************************************************************* */
+/*
 const sampleMacarons: MacaronArray = [
 	{
 		id: 10,
@@ -30,14 +43,25 @@ const sampleMacarons: MacaronArray = [
 		name: "Sweden",
 	},
 ];
-
+/*
 /* you can use sampleMacarons if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
 function MacaronList() {
 	// Step 1: get all macarons
+	const [data, setData] = useState<MacaronData[]>([]);
 
+	useEffect(() => {
+    async function fetchMacarons() {
+      const response = await fetch(MACARON_URL);
+      const result: MacaronData[] = await response.json();
+      setData(result);
+      console.info(result);
+    }
+
+    fetchMacarons();
+  }, []);
 	// Step 3: get all accessories
 
 	// Step 5: create filter state
@@ -58,9 +82,11 @@ function MacaronList() {
 			<ul className="macaron-list" id="macaron-list">
 				{/* Step 2: repeat this block for each macaron */}
 				{/* Step 5: filter macarons before repeating */}
+				{data.length > 0 && (
 				<li className="macaron-item">
-					<Macaron data={sampleMacarons[0]} />
+					<Macaron data={data[0]} />
 				</li>
+				)}
 				{/* end of block */}
 			</ul>
 		</>
