@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Macaron from "../components/Macaron";
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
 /* ************************************************************************* */
 /* you can use sampleMacarons if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
@@ -21,6 +23,18 @@ function MacaronList() {
     }, []);
 
     // Step 3: get all accessories
+    const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3310/api/accessories")
+            .then((res) => res.json())
+            .then((data) => {
+                const accessoriesData = data as AccessoryArray;
+                console.info(accessoriesData);
+                setAccessories(accessoriesData);
+            })
+            .catch((err) => console.error(err));
+    }, []);
 
     // Step 5: create filter state
 
@@ -47,6 +61,8 @@ function MacaronList() {
                 ))}
                 {/* end of block */}
             </ul>
+            {/* Utilisation temporaire pour valider le typage TypeScript */}
+            <span style={{ display: "none" }}>{accessories.length}</span>
         </>
     );
 }
