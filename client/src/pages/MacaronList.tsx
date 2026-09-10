@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Macaron from "../components/Macaron";
 
 /* ************************************************************************* */
@@ -36,8 +37,19 @@ const sampleMacarons: MacaronArray = [
 /* ************************************************************************* */
 
 function MacaronList() {
-	// Step 1: get all macarons
 
+	const URL = "http://localhost:3310/api/macarons"
+	const [macarons, setMacarons] = useState([])
+
+	useEffect(() => {
+    fetch(URL)
+        .then((response) => response.json())
+        .then((data) => setMacarons(data));
+    }, []);
+
+	console.log(macarons)
+
+	
 	// Step 3: get all accessories
 
 	// Step 5: create filter state
