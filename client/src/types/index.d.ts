@@ -9,3 +9,5 @@ type Macaron = {
 };
 
 type MacaronArray = Macaron[];
+
+type AccessoryArray = { id: number; name: string; slug: string }[];

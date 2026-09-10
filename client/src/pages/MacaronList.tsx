@@ -20,6 +20,18 @@ function MacaronList() {
 	}, []);
 
 	// Step 3: get all accessories
+	const [, setAccessories] = useState<AccessoryArray>([]);
+
+	useEffect(() => {
+		const fetchAccessories = async () => {
+			const response = await fetch(`${import.meta.env.VITE_API_URL}/api/accessories`);
+			const data = (await response.json()) as AccessoryArray;
+			console.info(data);
+			setAccessories(data);
+		};
+
+		fetchAccessories().catch((err) => console.error(err));
+	}, []);
 
 	// Step 5: create filter state
 
