@@ -1,22 +1,28 @@
 import { useState, useEffect } from "react";
 import Macaron from "../components/Macaron";
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
 function MacaronList() {
     // Step 1: get all macarons
     const [macarons, setMacarons] = useState<MacaronArray>([]);
 
-    useEffect(() => {
-        fetch("http://localhost:3310/api/macarons")
-            .then((response) => response.json())
-            .then((data) => {
-                setMacarons(data);
-                console.info("Macarons récupérés :", data);
-            })
-            .catch((error) => console.error("Erreur fetch :", error));
-    }, []);
+  useEffect(() => {
+    fetch("http://localhost:3310/api/macarons")
+        .then((res) => res.json())
+        .then((data) => setMacarons(data));
+
+    fetch("http://localhost:3310/api/accessories")
+        .then((res) => res.json())
+        .then((data) => {
+            setAccessories(data as AccessoryArray);
+            console.info("Accessoires récupérés :", data);
+        })
+        .catch((err) => console.error(err));
+}, []);
 
     // Step 3: get all accessories
-
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
     // Step 5: create filter state
 
     return (
@@ -28,12 +34,15 @@ function MacaronList() {
                     Filter by{" "}
                     <select id="macaron-select">
                         <option value="">---</option>
-                        {/* Step 4: add an option for each accessory */}
+                        {accessories.map((accessory) => (
+                            <option key={accessory.id} value={accessory.id}>
+                                {accessory.name}
+                            </option>
+                        ))}
                     </select>
                 </label>
             </form>
             <ul className="macaron-list" id="macaron-list">
-                {/* Step 2: repeat this block for each macaron */}
                 {/* Step 5: filter macarons before repeating */}
                 {macarons.map((macaron) => (
                     <li key={macaron.id} className="macaron-item">
