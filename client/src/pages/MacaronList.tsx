@@ -99,13 +99,14 @@ function MacaronList() {
 			<h1>My macarons</h1>
 			{loading && <p>Macarons are loading...</p>}
 			{error && <p>Error : {error}</p>}
-			{accData && <p>accessories fetched (test)</p>}
 			<form className="center">
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
 					Filter by{" "}
 					<select id="macaron-select">
-						<option value="">---</option>
+						{accData.map((accessory) => (
+							<option key={accessory.id} value={accessory.id}>{accessory.name}</option>
+						))}
 						{/* Step 4: add an option for each accessory */}
 					</select>
 				</label>
