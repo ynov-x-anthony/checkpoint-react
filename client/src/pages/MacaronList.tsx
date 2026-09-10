@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Macaron from "../components/Macaron";
 
 
-
 type AccessoriesType = {id:number, name:string, slug:string}[]
 
 function MacaronList() {
@@ -25,16 +24,23 @@ function MacaronList() {
 	console.log(macarons)
 	console.log(accessories)
 
+	const [filter, setFilter] = useState("");
 
+	let filterMacarons = macarons.filter((m: Macaron) => filter === " " || String(m.accessory_id) === filter,
+	);
+	console.log("filterMacarons : "+ filterMacarons)
 	return (
 		<>
 			<h1>My macarons</h1>
 			<form className="center">
 				<label htmlFor="macaron-select">
-					{/* Step 5: use a controlled component for select */}
-					
 					Filter by{" "}
-					<select id="macaron-select">
+
+					<select
+						id="macaron-select"
+						value={filter}
+						onChange={(event) => setFilter(event.target.value)}
+					>
 						<option value=" ">---</option>
 
 						{accessories.map((option) => (
@@ -46,14 +52,11 @@ function MacaronList() {
 			</form>
 			<ul className="macaron-list" id="macaron-list">
 
-				filter = macaron
-
-				{macarons.map((macaron : Macaron) => (
+				{filterMacarons.map((macaron : Macaron) => (
 					
 					<li className="macaron-item">
 						<Macaron data = {macaron} key={macaron.id}></Macaron>
 					</li>))}
-				{/* Step 5: filter macarons before repeating */}
 
 				{/* end of block */}
 			</ul>
