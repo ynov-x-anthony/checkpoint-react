@@ -55,8 +55,6 @@ function MacaronList() {
 			.catch((err) => console.error(err));
 	}, []);
 
-	console.info(accessories);
-
 	return (
 		<>
 			<h1>My macarons</h1>
@@ -65,6 +63,11 @@ function MacaronList() {
 					Filter by{" "}
 					<select id="macaron-select">
 						<option value="">---</option>
+						{accessories.map((accessory) => (
+							<option key={accessory.id} value={accessory.id}>
+								{accessory.name}
+							</option>
+						))}
 					</select>
 				</label>
 			</form>
