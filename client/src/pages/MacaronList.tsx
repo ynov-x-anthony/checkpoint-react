@@ -36,7 +36,7 @@ const sampleMacarons: MacaronArray = [
 /* ************************************************************************* */
 
 import { useEffect, useState } from "react";
-
+type AccessoryArray = { id: number; name: string; slug: string }[];
 
 function MacaronList() {
 	// Step 1: get all macarons
@@ -45,19 +45,30 @@ function MacaronList() {
 
 	useEffect(() => {
 		async function load() {
- 			const res = await fetch("http://localhost:3310/api/macarons");
+ 			const res = await fetch(`${import.meta.env.VITE_API_URL}/api/macarons`);
  			const data = await res.json();
+			console.log(data)
  		setMacarons(data);
  		}
  		load();
 		return
 	}, []);
 
-	useEffect(() => {
-    	console.info("Les macarons ont été chargés");
-  }, [macarons]);
-
 	// Step 3: get all accessories
+
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+	useEffect(() => {
+		async function load() {
+ 			const res = await fetch(`${import.meta.env.VITE_API_URL}/api/accessories`);
+ 			const data = await res.json();
+			console.log(accessories)
+ 		setAccessories(data);
+ 		}
+ 		load();
+		return
+	}, []);
+
 
 	// Step 5: create filter state
 
