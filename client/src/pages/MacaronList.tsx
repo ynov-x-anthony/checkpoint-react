@@ -1,47 +1,11 @@
 import { useEffect, useState } from "react";
 import Macaron from "../components/Macaron";
 
-/* ************************************************************************* */
-// const sampleMacarons: MacaronArray = [
-// 	{
-// 		id: 10,
-// 		accessory_id: "4",
-// 		accessory: "agorski",
-// 		color1: "blue",
-// 		color2: "white",
-// 		color3: "red",
-// 		name: "France",
-// 	},
-// 	{
-// 		id: 11,
-// 		accessory_id: "4",
-// 		accessory: "agorski",
-// 		color1: "yellow",
-// 		color2: "red",
-// 		color3: "black",
-// 		name: "Germany",
-// 	},
-// 	{
-// 		id: 27,
-// 		accessory_id: "5",
-// 		accessory: "christmas-candy",
-// 		color1: "yellow",
-// 		color2: "blue",
-// 		color3: "blue",
-// 		name: "Sweden",
-// 	},
-// ];
-
-/* you can use sampleMacarons if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
-
 function MacaronList() {
 
 	const URL = "http://localhost:3310/api/macarons"
 	const accessoriesURL = "http://localhost:3310/api/accessories"
 
-	// Step 1: get all macarons
 	const [data, setData] = useState<Macaron[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
@@ -79,7 +43,6 @@ function MacaronList() {
 		return () => controller.abort()
 	}, [])
 
-	// Step 3: get all accessories
 	const [accData, setAccData] = useState<Accessory[]>([])
 
 	useEffect(() => {
@@ -92,8 +55,7 @@ function MacaronList() {
 		load()
 	}, [])
 
-	// Step 5: create filter state
-
+	const [filter, setFilter] = useState<string>("")
 	return (
 		<>
 			<h1>My macarons</h1>
@@ -101,26 +63,28 @@ function MacaronList() {
 			{error && <p>Error : {error}</p>}
 			<form className="center">
 				<label htmlFor="macaron-select">
-					{/* Step 5: use a controlled component for select */}
-					Filter by{" "}
-					<select id="macaron-select">
+					Filter by{filter}
+					<select onChange={(event) => setFilter(event.target.value)} id="macaron-select">
 						{accData.map((accessory) => (
-							<option key={accessory.id} value={accessory.id}>{accessory.name}</option>
+							<option key={accessory.id} value={accessory.slug}>{accessory.name}</option>
 						))}
-						{/* Step 4: add an option for each accessory */}
 					</select>
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{/* Step 2: repeat this block for each macaron */}
-				{/* Step 5: filter macarons before repeating */}
 				{data.map((macaron: Macaron) => (
-					<li key={macaron.id} className="macaron-item">
-						<Macaron data={macaron} />
-					</li>
+					filter === "" ? (
+						<li key={macaron.id} className="macaron-item">
+							<Macaron data={macaron} />
+						</li> 
+					) : (
+						macaron.accessory === filter && (
+							<li key={macaron.id} className="macaron-item">
+								<Macaron data={macaron} />
+							</li> 
+						)
+					)
 				))}
-				
-				{/* end of block */}
 			</ul>
 		</>
 	);
