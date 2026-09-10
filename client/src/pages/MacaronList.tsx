@@ -53,6 +53,8 @@ function MacaronList() {
 
 	const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
+	const [filter, setFilter] = useState<string>("")
+
     useEffect(() => {
         fetch("http://localhost:3310/api/macarons")
             .then((response) => response.json())
@@ -83,8 +85,8 @@ function MacaronList() {
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
 					Filter by{" "}
-					<select id="macaron-select">
-						<option value=" ">---</option>
+					<select onChange={(event) => setFilter(event.target.value)} id="macaron-select">
+						<option value="">---</option>
 
 						{accessories.map((acces) => (
 							<option value={acces.id}>{acces.name}</option>
@@ -93,8 +95,9 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-                {/* Step 2: repeat this block for each macaron */}
-                {macarons.map((macaron) => (
+				{macarons
+					.filter((macaron) => filter === "" || macaron.accessory_id.toString() === filter)
+                	.map((macaron) => (
 					<li key={macaron.id} className="macaron-item">
 						<Macaron data={macaron}  />
 					</li>
