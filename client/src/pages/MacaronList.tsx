@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Macaron from "../components/Macaron";
 
+
 function MacaronList() {
     // Step 1: get all macarons
     const [macarons, setMacarons] = useState<MacaronArray>([]);
@@ -17,6 +18,18 @@ function MacaronList() {
     }, []);
 
     // Step 3: get all accessories
+    const [accessories, setAccessories] = useState<any[]>([]);
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL || "http://localhost:3310"}/api/accessories`)
+            .then((res) => res.json())
+            .then((data) => {
+                setAccessories(data);
+            })
+            .catch((error) => {
+                console.error("Erreur fetch accessories :", error);
+            });
+    }, []);
 
     // Step 5: create filter state
 
@@ -30,6 +43,11 @@ function MacaronList() {
                     <select id="macaron-select">
                         <option value="">---</option>
                         {/* Step 4: add an option for each accessory */}
+                        {accessories.map((accessory) => (
+                            <option key={accessory.id} value={accessory.id}>
+                                {accessory.name || accessory.accessory || accessory.label || accessory.id}
+                            </option>
+                        ))}
                     </select>
                 </label>
             </form>
