@@ -95,7 +95,12 @@ if (fs.existsSync(clientBuildPath)) {
 
   // Redirect unhandled requests to the client index file
 
-  app.get("*", (_, res) => {
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) {
+      next();
+      return;
+    }
+
     res.sendFile("index.html", { root: clientBuildPath });
   });
 }
