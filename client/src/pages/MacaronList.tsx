@@ -48,6 +48,11 @@ function MacaronList() {
                     <select id="macaron-select">
                         <option value="">---</option>
                         {/* Step 4: add an option for each accessory */}
+                        {accessories.map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
                     </select>
                 </label>
             </form>
@@ -61,8 +66,6 @@ function MacaronList() {
                 ))}
                 {/* end of block */}
             </ul>
-            {/* Utilisation temporaire pour valider le typage TypeScript */}
-            <span style={{ display: "none" }}>{accessories.length}</span>
         </>
     );
 }
