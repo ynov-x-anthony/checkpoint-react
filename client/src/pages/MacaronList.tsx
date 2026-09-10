@@ -41,7 +41,7 @@ function MacaronList() {
 	const [macarons, setMacarons] = useState([])
 
 	useEffect(() => {
-    fetch(import.meta.env.VITE_API_URL)
+    fetch(import.meta.env.VITE_API_URL + "/api/macarons ")
         .then((response) => response.json())
         .then((data) => setMacarons(data));
     }, []);
@@ -67,7 +67,7 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{/* Step 2: repeat this block for each macaron */}
+				{macarons.map((macaron : Macaron) => (<Macaron data = {macaron} key={macaron.id}></Macaron>))}
 				{/* Step 5: filter macarons before repeating */}
 				<li className="macaron-item">
 					<Macaron data={sampleMacarons[0]} />
