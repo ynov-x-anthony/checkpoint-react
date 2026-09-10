@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Macaron from "../components/Macaron";
-
+type AccessoryArray = { id: number; name: string; slug: string }[];
 // Typage pour l'étape 1
 type MacaronType = {
   id: number;
@@ -63,7 +63,20 @@ function MacaronList() {
         fetchMacarons();
     }, []);
 	// Step 3: get all accessories
+    const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
+    //fetch dédié aux accessoires
+    useEffect(() => {
+        const fetchAccessories = async () => {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/accessories`);
+            const data = await response.json();
+            
+            setAccessories(data as AccessoryArray);
+        };
+
+        fetchAccessories();
+    }, []);
+    console.info("Vérification Étape 3 :", accessories);
 	// Step 5: create filter state
 
 	return (
