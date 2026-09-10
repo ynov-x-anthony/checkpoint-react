@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 
 import MacaronList from "./pages/MacaronList";
+import MacaronDetails from "./pages/MacaronDetails";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 
@@ -30,15 +31,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/macarons/:id",
-        element: <MacaronList />,
+        element: <MacaronDetails />,
         loader: async ({ params }) => {
           const response = await fetch(
             `${import.meta.env.VITE_API_URL}/api/macarons/${params.id}`,
           );
 
           return response.json();
-        }, 
-      }
+        },
+      },
     ],
   },
 ]);
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
 
 // Find the root element in the HTML document
 const rootElement = document.getElementById("root");
+
 if (rootElement == null) {
   throw new Error(`Your HTML Document should contain a <div id="root"></div>`);
 }
