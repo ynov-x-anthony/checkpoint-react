@@ -11,8 +11,17 @@ Pour exemple, si ta fonction recevait le tableau ci-dessous en paramètre, tu de
 */
 
 function getPoints(results: string[]): number {
-  // Ton code ici !
-  return 0;
+  let total = 0
+
+  for (let index = 0; index < results.length; index++) {
+    let score = results[index];
+      if (Number(score[0]) > Number(score[2])){
+        total += 3
+      }else if (Number(score[0]) == Number(score[2])){
+        total += 1
+    }
+  }
+  return total;
 }
 
 export default getPoints;
