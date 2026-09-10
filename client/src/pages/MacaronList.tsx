@@ -38,16 +38,9 @@ import Macaron from "../components/Macaron";
 
 function MacaronList() {
 
-	// type Macaron = {
-	// 	id: number,
-	// 	accessory_id: number
-	// 	color1: string,
-	// 	color2: string,
-	// 	color3: string,
-	// 	name: string
-
-	// }
 	const URL = "http://localhost:3310/api/macarons"
+	const accessoriesURL = "http://localhost:3310/api/accessories"
+
 	// Step 1: get all macarons
 	const [data, setData] = useState<Macaron[]>([])
 	const [loading, setLoading] = useState(true)
@@ -87,6 +80,17 @@ function MacaronList() {
 	}, [])
 
 	// Step 3: get all accessories
+	const [accData, setAccData] = useState<Accessory[]>([])
+
+	useEffect(() => {
+		async function load() {
+			const response = await fetch(accessoriesURL)
+			const result: Accessory[] = await response.json()
+			setAccData(result)
+		}
+
+		load()
+	}, [])
 
 	// Step 5: create filter state
 
@@ -95,7 +99,7 @@ function MacaronList() {
 			<h1>My macarons</h1>
 			{loading && <p>Macarons are loading...</p>}
 			{error && <p>Error : {error}</p>}
-			{/* {data && <p>data fetched (test)</p>} */}
+			{accData && <p>accessories fetched (test)</p>}
 			<form className="center">
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
