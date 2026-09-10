@@ -11,8 +11,17 @@ Pour exemple, si ta fonction recevait le tableau ci-dessous en paramètre, tu de
 */
 
 function getPoints(results: string[]): number {
-  // Ton code ici !
-  return 0;
+  return results.reduce((totalPoints, match) => {
+        const [ourScore, opponentScore] = match.split(":").map(Number);
+
+        if (ourScore > opponentScore) {
+            return totalPoints + 3; 
+        }
+        if (ourScore === opponentScore) {
+            return totalPoints + 1; 
+        }
+        return totalPoints;
+    }, 0);
 }
 
 export default getPoints;
