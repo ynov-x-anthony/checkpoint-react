@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Macaron from "../components/Macaron";
 
 type AccessoryArray = { id: number; name: string; slug: string }[];
@@ -70,7 +71,9 @@ function MacaronList() {
                 {/* Step 5: filter macarons before repeating */}
                 {filteredMacarons.map((macaron: any) => (
                     <li className="macaron-item" key={macaron.id}>
-                        <Macaron data={macaron} />
+                        <Link to={`/macarons/${macaron.id}`}>
+                            <Macaron data={macaron} />
+                        </Link>
                     </li>
                 ))}
                 {/* end of block */}
