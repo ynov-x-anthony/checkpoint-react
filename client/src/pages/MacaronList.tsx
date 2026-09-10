@@ -41,7 +41,7 @@ import { useEffect, useState } from "react";
 function MacaronList() {
 	// Step 1: get all macarons
 
-	const [macarons, setMacarons] = useState(null);
+	const [macarons, setMacarons] = useState<MacaronArray>([]);
 
 	useEffect(() => {
 		async function load() {
@@ -75,7 +75,11 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{/* Step 2: repeat this block for each macaron */}
+				{macarons?.map((macaron) => (
+                	<li className="macaron-item" key={macaron.id}>
+                    	<Macaron data={macaron} />
+                	</li>
+            	))}
 				{/* Step 5: filter macarons before repeating */}
 				<li className="macaron-item">
 					<Macaron data={sampleMacarons[0]} />
