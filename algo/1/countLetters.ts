@@ -1,7 +1,13 @@
-export function countLetters(str: string): Record<string, number> {
-  const counts: Record<string, number> = {};
-  for (const char of str) {
-    counts[char] = (counts[char] || 0) + 1;
+function countLetters(givenString: string, letter: string): number {
+  let count = 0;
+
+  for (let i = 0; i < givenString.length; i++) {
+    if (givenString[i] === letter) {
+      count++;
+    }
   }
-  return counts;
+
+  return count;
 }
+
+export default countLetters;
