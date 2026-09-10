@@ -44,8 +44,8 @@ app.get("/api/accessories/:id", (req, res) => {
   }
 });
 
-// Get the port from the environment variables
-const port = process.env.APP_PORT;
+// Get the port from the environment variables OR use 3001 by default
+const port = process.env.APP_PORT || 3001;
 
 // Start the server and listen on the specified port
 app

@@ -20,9 +20,8 @@ const app = express();
 
 import cors from "cors";
 
-if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL] }));
-}
+const clientUrl = process.env.CLIENT_URL ?? "http://localhost:3000";
+app.use(cors({ origin: [clientUrl] }));
 
 // If you need to allow extra origins, you can add something like this:
 
@@ -95,7 +94,12 @@ if (fs.existsSync(clientBuildPath)) {
 
   // Redirect unhandled requests to the client index file
 
-  app.get("*", (_, res) => {
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) {
+      next();
+      return;
+    }
+
     res.sendFile("index.html", { root: clientBuildPath });
   });
 }

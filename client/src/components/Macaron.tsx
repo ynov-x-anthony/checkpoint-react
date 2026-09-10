@@ -11,24 +11,9 @@ function Macaron({ data }: MacaronProps) {
         <div className={`accessory ${data.accessory}`} />
         <div className="shell shell-top" />
         <div className="filling">
-          <div
-            className="filling-color"
-            style={{
-              backgroundColor: data.color1,
-            }}
-          />
-          <div
-            className="filling-color"
-            style={{
-              backgroundColor: data.color2,
-            }}
-          />
-          <div
-            className="filling-color"
-            style={{
-              backgroundColor: data.color3,
-            }}
-          />
+          <div className="filling-color" style={{ backgroundColor: data.color1 }} />
+          <div className="filling-color" style={{ backgroundColor: data.color2 }} />
+          <div className="filling-color" style={{ backgroundColor: data.color3 }} />
         </div>
         <div className="shell shell-bottom">
           <div className="face">
@@ -44,7 +29,6 @@ function Macaron({ data }: MacaronProps) {
           </div>
         </div>
       </div>
-
       <div className="macaron-name">{data.name}</div>
     </div>
   );
