@@ -2,35 +2,35 @@ import { useEffect, useState } from "react";
 import Macaron from "../components/Macaron";
 
 /* ************************************************************************* */
-const sampleMacarons: MacaronArray = [
-	{
-		id: 10,
-		accessory_id: "4",
-		accessory: "agorski",
-		color1: "blue",
-		color2: "white",
-		color3: "red",
-		name: "France",
-	},
-	{
-		id: 11,
-		accessory_id: "4",
-		accessory: "agorski",
-		color1: "yellow",
-		color2: "red",
-		color3: "black",
-		name: "Germany",
-	},
-	{
-		id: 27,
-		accessory_id: "5",
-		accessory: "christmas-candy",
-		color1: "yellow",
-		color2: "blue",
-		color3: "blue",
-		name: "Sweden",
-	},
-];
+// const sampleMacarons: MacaronArray = [
+// 	{
+// 		id: 10,
+// 		accessory_id: "4",
+// 		accessory: "agorski",
+// 		color1: "blue",
+// 		color2: "white",
+// 		color3: "red",
+// 		name: "France",
+// 	},
+// 	{
+// 		id: 11,
+// 		accessory_id: "4",
+// 		accessory: "agorski",
+// 		color1: "yellow",
+// 		color2: "red",
+// 		color3: "black",
+// 		name: "Germany",
+// 	},
+// 	{
+// 		id: 27,
+// 		accessory_id: "5",
+// 		accessory: "christmas-candy",
+// 		color1: "yellow",
+// 		color2: "blue",
+// 		color3: "blue",
+// 		name: "Sweden",
+// 	},
+// ];
 
 /* you can use sampleMacarons if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
@@ -38,15 +38,15 @@ const sampleMacarons: MacaronArray = [
 
 function MacaronList() {
 
-	type Macaron = {
-		id: number,
-		accessory_id: number
-		color1: string,
-		color2: string,
-		color3: string,
-		name: string
+	// type Macaron = {
+	// 	id: number,
+	// 	accessory_id: number
+	// 	color1: string,
+	// 	color2: string,
+	// 	color3: string,
+	// 	name: string
 
-	}
+	// }
 	const URL = "http://localhost:3310/api/macarons"
 	// Step 1: get all macarons
 	const [data, setData] = useState<Macaron[]>([])
@@ -95,7 +95,7 @@ function MacaronList() {
 			<h1>My macarons</h1>
 			{loading && <p>Macarons are loading...</p>}
 			{error && <p>Error : {error}</p>}
-			{data && <p>data fetched (test)</p>}
+			{/* {data && <p>data fetched (test)</p>} */}
 			<form className="center">
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
@@ -109,9 +109,12 @@ function MacaronList() {
 			<ul className="macaron-list" id="macaron-list">
 				{/* Step 2: repeat this block for each macaron */}
 				{/* Step 5: filter macarons before repeating */}
-				<li className="macaron-item">
-					<Macaron data={sampleMacarons[0]} />
-				</li>
+				{data.map((macaron: Macaron) => (
+					<li key={macaron.id} className="macaron-item">
+						<Macaron data={macaron} />
+					</li>
+				))}
+				
 				{/* end of block */}
 			</ul>
 		</>
