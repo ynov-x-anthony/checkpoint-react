@@ -55,13 +55,20 @@ function MacaronList() {
 			.catch((err) => console.error(err));
 	}, []);
 
+	// Step 5: create filter state
+	const [selectedAccessory, setSelectedAccessory] = useState<string>("");
+
 	return (
 		<>
 			<h1>My macarons</h1>
 			<form className="center">
 				<label htmlFor="macaron-select">
 					Filter by{" "}
-					<select id="macaron-select">
+					<select
+						id="macaron-select"
+						value={selectedAccessory}
+						onChange={(e) => setSelectedAccessory(e.target.value)}
+					>
 						<option value="">---</option>
 						{accessories.map((accessory) => (
 							<option key={accessory.id} value={accessory.id}>
@@ -72,11 +79,17 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{macarons.map((macaron) => (
-					<li className="macaron-item" key={macaron.id}>
-						<Macaron data={macaron} />
-					</li>
-				))}
+				{macarons
+					.filter(
+						(macaron) =>
+							selectedAccessory === "" ||
+							macaron.accessory_id === selectedAccessory,
+					)
+					.map((macaron) => (
+						<li className="macaron-item" key={macaron.id}>
+							<Macaron data={macaron} />
+						</li>
+					))}
 			</ul>
 		</>
 	);
