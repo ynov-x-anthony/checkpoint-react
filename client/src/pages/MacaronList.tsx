@@ -11,6 +11,10 @@ type MacaronData = {
   name: string;
 };
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
+const ACCESSORY_URL = `${import.meta.env.VITE_API_URL}/api/accessories`;
+
 const MACARON_URL = `${import.meta.env.VITE_API_URL}/api/macarons`;
 /* ************************************************************************* */
 /*
@@ -61,9 +65,20 @@ function MacaronList() {
     }
 
     fetchMacarons();
-  }, []);
+  	}, []);
 	// Step 3: get all accessories
+  	const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
+	useEffect(() => {
+		async function fetchAccessories() {
+		const response = await fetch(ACCESSORY_URL);
+		const result = (await response.json()) as AccessoryArray;
+		setAccessories(result);
+		console.info(result);
+		}
+
+		fetchAccessories();
+	}, []);
 	// Step 5: create filter state
 
 	return (
@@ -76,6 +91,11 @@ function MacaronList() {
 					<select id="macaron-select">
 						<option value="">---</option>
 						{/* Step 4: add an option for each accessory */}
+						{accessories.map((accessory) => (
+							<option key={accessory.id} value={accessory.id}>
+							{accessory.name}
+							</option>
+						))}
 					</select>
 				</label>
 			</form>
