@@ -62,7 +62,7 @@ function MacaronList() {
 		async function load() {
  			const res = await fetch(`${import.meta.env.VITE_API_URL}/api/accessories`);
  			const data = await res.json();
-			console.log(accessories)
+			console.log(data)
  		setAccessories(data);
  		}
  		load();
@@ -81,6 +81,11 @@ function MacaronList() {
 					Filter by{" "}
 					<select id="macaron-select">
 						<option value="">---</option>
+						{accessories?.map((accessory) => (
+								<option key={accessory.id} value={accessory.id}>
+									{accessory.name}
+								</option>
+							))}
 						{/* Step 4: add an option for each accessory */}
 					</select>
 				</label>
