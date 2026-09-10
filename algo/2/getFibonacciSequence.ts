@@ -25,6 +25,8 @@ function getFibonacciSequence(size: number): number[] {
     sequence.push(next);
 
     
+
+    
   }
   
 
