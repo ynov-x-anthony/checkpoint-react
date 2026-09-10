@@ -32,6 +32,15 @@ function MacaronList() {
     }, []);
 
     // Step 5: create filter state
+    const [selectedAccessory, setSelectedAccessory] = useState<string>("");
+
+    // Step 5: filtrer la liste selon l'accessoire sélectionné
+    const filteredMacarons = macarons.filter((macaron) => {
+        if (selectedAccessory === "") {
+            return true;
+        }
+        return String(macaron.accessory_id) === String(selectedAccessory);
+    });
 
     return (
         <>
@@ -40,7 +49,11 @@ function MacaronList() {
                 <label htmlFor="macaron-select">
                     {/* Step 5: use a controlled component for select */}
                     Filter by{" "}
-                    <select id="macaron-select">
+                    <select
+                        id="macaron-select"
+                        value={selectedAccessory}
+                        onChange={(e) => setSelectedAccessory(e.target.value)}
+                    >
                         <option value="">---</option>
                         {/* Step 4: add an option for each accessory */}
                         {accessories.map((accessory) => (
@@ -52,8 +65,8 @@ function MacaronList() {
                 </label>
             </form>
             <ul className="macaron-list" id="macaron-list">
-                {/* Step 2: repeat this block for each macaron */}
-                {macarons.map((macaron) => (
+                {/* Step 2 & 5: mapping sur la liste filtrée */}
+                {filteredMacarons.map((macaron) => (
                     <li className="macaron-item" key={macaron.id}>
                         <Macaron data={macaron} />
                     </li>
