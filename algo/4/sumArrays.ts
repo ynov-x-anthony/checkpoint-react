@@ -10,8 +10,20 @@ sumArr( ["2", "5", "3"], ["2", "4", "9", "5", "5"] ) should return ["4", "9", "1
 */
 
 function sumArr(arrayA: string[], arrayB: string[]): string[] {
-  // Ton code ici !
-  return [];
-}
+ const maxLength = Math.max(arrayA.length, arrayB.length);
+    const result: string[] = [];
+
+    for (let i = 0; i < maxLength; i++) {
+        // Si l'élément existe et n'est pas vide, on le convertit en nombre, sinon il vaut 0
+        const valA = arrayA[i] && arrayA[i] !== "" ? Number(arrayA[i]) : 0;
+        const valB = arrayB[i] && arrayB[i] !== "" ? Number(arrayB[i]) : 0;
+
+        // On additionne et on reconvertit le résultat en chaîne de caractères
+        const sum = valA + valB;
+        result.push(String(sum));
+    }
+
+    return result;
+  }
 
 export default sumArr;
