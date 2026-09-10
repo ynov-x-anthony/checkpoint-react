@@ -81,12 +81,12 @@ function MacaronList() {
 			</form>
 			<ul className="macaron-list" id="macaron-list">
 				{/* Step 2: repeat this block for each macaron */}
+					{data.map((macaron) => (
+    					<li className="macaron-item" key={macaron.id}>
+     						<Macaron data={macaron} />
+    					</li>
+  					))}
 				{/* Step 5: filter macarons before repeating */}
-				{data.length > 0 && (
-				<li className="macaron-item">
-					<Macaron data={data[0]} />
-				</li>
-				)}
 				{/* end of block */}
 			</ul>
 		</>
