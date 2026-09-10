@@ -1,5 +1,3 @@
-// ⚠️ NE PAS TOUCHER
-
 import getFibonacciSequence from "./getFibonacciSequence";
 
 test("retourne [] si n = 0", () => {
