@@ -4,8 +4,11 @@ import Macaron from "../components/Macaron";
 
 /* ************************************************************************* */
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
 function MacaronList() {
 	const [macarons, setMacarons] = useState<MacaronArray>([]);
+	const [, setAccessories] = useState<AccessoryArray>([]);
 
 	useEffect(() => {
 		fetch(`${import.meta.env.VITE_API_URL}/api/macarons`)
@@ -19,7 +22,15 @@ function MacaronList() {
 			});
 	}, []);
 
-	// Step 3: get all accessories
+	useEffect(() => {
+		fetch(`${import.meta.env.VITE_API_URL}/api/accessories`)
+			.then((response) => response.json())
+			.then((data) => {
+				const accessoryData = data as AccessoryArray;
+				console.info(accessoryData);
+				setAccessories(accessoryData);
+			});
+	}, []);
 
 	// Step 5: create filter state
 
