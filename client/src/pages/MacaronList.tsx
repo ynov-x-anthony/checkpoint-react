@@ -57,6 +57,8 @@ function MacaronList() {
 	}, [])
 
 	const [filter, setFilter] = useState<string>("")
+	const filteredData = filter === "" ? data : data.filter((macaron) => macaron.accessory_id === filter)
+
 	return (
 		<>
 			<h1>My macarons</h1>
@@ -73,22 +75,12 @@ function MacaronList() {
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
-				{data.map((macaron: Macaron) => (
-					filter === "" ? (
-						<Link to={"/macarons/" + macaron.id}>
-							<li key={macaron.id} className="macaron-item">
-								<Macaron data={macaron} />
-							</li> 
-						</Link>
-					) : (
-						macaron.accessory_id === filter && (
-							<Link to={"/macarons/" + macaron.id}>
-								<li key={macaron.id} className="macaron-item">
-									<Macaron data={macaron} />
-								</li>
-							</Link>
-						)
-					)
+				{filteredData.map((macaron) => (
+					<Link to={"/macarons/" + macaron.id}>
+						<li key={macaron.id} className="macaron-item">
+							<Macaron data={macaron} />
+						</li> 
+					</Link>
 				))}
 			</ul>
 		</>
