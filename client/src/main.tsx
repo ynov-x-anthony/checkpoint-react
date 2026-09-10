@@ -28,6 +28,17 @@ const router = createBrowserRouter([
         path: "/macarons",
         element: <MacaronList />,
       },
+      {
+        path: "/macarons/:id",
+        element: <MacaronList />,
+        loader: async ({ params }) => {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/macarons/${params.id}`,
+          );
+
+          return response.json();
+        }, 
+      }
     ],
   },
 ]);
