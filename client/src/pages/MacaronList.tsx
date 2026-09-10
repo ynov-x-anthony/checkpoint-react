@@ -38,11 +38,10 @@ const sampleMacarons: MacaronArray = [
 
 function MacaronList() {
 
-	const URL = "http://localhost:3310/api/macarons"
 	const [macarons, setMacarons] = useState([])
 
 	useEffect(() => {
-    fetch(URL)
+    fetch(import.meta.env.VITE_API_URL)
         .then((response) => response.json())
         .then((data) => setMacarons(data));
     }, []);
