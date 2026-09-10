@@ -1,5 +1,5 @@
 import Macaron from "../components/Macaron";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import { Link } from "react-router-dom";
 
 /* you can use sampleMacarons if you're stucked on step 1 */

@@ -1,7 +1,7 @@
 // Import necessary modules from React and React Router
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
+import MacaronDetails from "./pages/MacaronDetails.tsx";
 
 /* ************************************************************************* */
 
@@ -28,6 +28,15 @@ const router = createBrowserRouter([
         path: "/macarons",
         element: <MacaronList />,
       },
+      {
+        path: "/macarons/:id",
+        element: <MacaronDetails />,
+        loader: async ({ params }) => {
+          const res = await fetch(`http://localhost:3310/api/macarons/${params.id}`);
+            if (!res.ok) throw new Response("Not Found", { status: 404 });
+            return res.json();
+        },
+      }
     ],
   },
 ]);
@@ -42,7 +51,7 @@ if (rootElement == null) {
 
 // Render the app inside the root element
 createRoot(rootElement).render(
-  <StrictMode>
+  <>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </>,
 );
