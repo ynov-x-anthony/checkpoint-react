@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Macaron from "../components/Macaron";
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
 function MacaronList() {
 	// Step 1: get all macarons
 	const [macarons, setMacarons] = useState<MacaronArray>([]);
@@ -14,6 +16,17 @@ function MacaronList() {
 	}, []);
 
 	// Step 3: get all accessories
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+	useEffect(() => {
+		fetch(`${import.meta.env.VITE_API_URL}/api/accessories`)
+			.then((response) => response.json())
+			.then((data: AccessoryArray) => {
+				setAccessories(data);
+			});
+	}, []);
+
+	console.info(accessories);
 
 	// Step 5: create filter state
 
