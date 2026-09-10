@@ -89,7 +89,12 @@ function MacaronList() {
 					<select id="macaron-select">
 						<option value="">---</option>
 						{/* Step 4: add an option for each accessory */}
-					</select>
+						{accessories.map((accessory) => (
+                            <option key={accessory.id} value={accessory.id}>
+                                {accessory.name}
+                            </option>
+                        ))}
+                    </select>
 				</label>
 			</form>
 			<ul className="macaron-list" id="macaron-list">
