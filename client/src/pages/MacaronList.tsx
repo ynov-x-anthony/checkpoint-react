@@ -20,7 +20,7 @@ function MacaronList() {
 	}, []);
 
 	// Step 3: get all accessories
-	const [, setAccessories] = useState<AccessoryArray>([]);
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
 	useEffect(() => {
 		const fetchAccessories = async () => {
@@ -44,7 +44,11 @@ function MacaronList() {
 					Filter by{" "}
 					<select id="macaron-select">
 						<option value="">---</option>
-						{/* Step 4: add an option for each accessory */}
+						{accessories.map((accessory) => (
+							<option key={accessory.id} value={accessory.id}>
+								{accessory.name}
+							</option>
+						))}
 					</select>
 				</label>
 			</form>
