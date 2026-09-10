@@ -1,7 +1,7 @@
 import Macaron from "../components/Macaron";
 import { useEffect, useState } from "react";
 
-const sampleMacarons: MacaronArray = [
+/* const sampleMacarons: MacaronArray = [
 	{
 		id: 10,
 		accessory_id: "4",
@@ -29,7 +29,7 @@ const sampleMacarons: MacaronArray = [
 		color3: "blue",
 		name: "Sweden",
 	},
-];
+]; */
 
 /* you can use sampleMacarons if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
@@ -44,6 +44,18 @@ function MacaronList() {
 			.then((data: MacaronArray) => setMacarons(data))
 			.catch((err) => console.error(err));
 	}, []);
+
+	// Step 3: get all accessories
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+	useEffect(() => {
+		fetch(`${import.meta.env.VITE_API_URL}/api/accessories`)
+			.then((res) => res.json())
+			.then((data: AccessoryArray) => setAccessories(data))
+			.catch((err) => console.error(err));
+	}, []);
+
+	console.info(accessories);
 
 	return (
 		<>
