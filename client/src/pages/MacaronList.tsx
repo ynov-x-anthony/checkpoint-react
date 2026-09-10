@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router";
 import Macaron from "../components/Macaron";
 
 type AccessoryArray = {
@@ -99,9 +99,11 @@ function MacaronList() {
               macaron.accessory_id === selectedAccessory,
           )
           .map((macaron) => (
-            <li className="macaron-item" key={macaron.id}>
-              <Macaron data={macaron} />
-            </li>
+			<li className="macaron-item" key={macaron.id}>
+  			<Link to={`/macarons/${macaron.id}`}>
+    		<Macaron data={macaron} />
+  			</Link>
+		</li>
           ))}
       </ul>
     </>
