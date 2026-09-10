@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 import Macaron from "../components/Macaron";
 
@@ -64,7 +65,9 @@ function MacaronList() {
 			<ul className="macaron-list" id="macaron-list">
 				{filteredMacarons.map((macaron) => (
 					<li className="macaron-item" key={macaron.id}>
-						<Macaron data={macaron} />
+						<Link to={`/macarons/${macaron.id}`}>
+							<Macaron data={macaron} />
+						</Link>
 					</li>
 				))}
 			</ul>
