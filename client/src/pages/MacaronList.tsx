@@ -35,7 +35,13 @@ function MacaronList() {
 			</form>
 			<ul className="macaron-list" id="macaron-list">
 				{/* Step 2: repeat this block for each macaron */}
-
+				{macarons.map((macaron) => {
+					return (
+						<li key={macaron.id} className="macaron-item">
+							<Macaron data={macaron} />
+						</li>
+					);
+				})}
 				{/* Step 5: filter macarons before repeating */}
 
 				{/* end of block */}
