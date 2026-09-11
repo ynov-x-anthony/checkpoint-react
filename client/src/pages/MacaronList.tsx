@@ -10,6 +10,8 @@ import Macaron from "../components/Macaron";
 function MacaronList() {
 	const [macarons, setMacarons] = useState<MacaronArray>([]);
 	const [accessories, setAccessories] = useState<AccessoryArray>([]);
+	const [filter, setFilter] = useState<string>("");
+
 	// Step 1: get all macarons
 	useEffect(() => {
 		fetch(`${import.meta.env.VITE_API_URL}/api/macarons`)
@@ -30,7 +32,11 @@ function MacaronList() {
 				<label htmlFor="macaron-select">
 					{/* Step 5: use a controlled component for select */}
 					Filter by{" "}
-					<select id="macaron-select">
+					<select
+						id="macaron-select"
+						value={filter}
+						onChange={(e) => setFilter(e.target.value)}
+					>
 						<option value="">---</option>
 						{/* Step 4: add an option for each accessory */}
 						{accessories.map((accessory) => (
@@ -43,13 +49,21 @@ function MacaronList() {
 			</form>
 			<ul className="macaron-list" id="macaron-list">
 				{/* Step 2: repeat this block for each macaron */}
-				{macarons.map((macaron) => {
-					return (
-						<li key={macaron.id} className="macaron-item">
-							<Macaron data={macaron} />
-						</li>
-					);
-				})}
+				{macarons
+					.filter((macaron) => {
+						// Step 5: filter macarons before repeating
+						if (filter === "") {
+							return true;
+						}
+						return macaron.accessory === filter;
+					})
+					.map((macaron) => {
+						return (
+							<li key={macaron.id} className="macaron-item">
+								<Macaron data={macaron} />
+							</li>
+						);
+					})}
 				{/* Step 5: filter macarons before repeating */}
 
 				{/* end of block */}
