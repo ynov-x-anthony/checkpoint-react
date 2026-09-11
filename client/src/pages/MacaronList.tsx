@@ -9,14 +9,17 @@ import Macaron from "../components/Macaron";
 
 function MacaronList() {
 	const [macarons, setMacarons] = useState<MacaronArray>([]);
+	const [accessories, setAccessories] = useState<AccessoryArray>([]);
 	// Step 1: get all macarons
 	useEffect(() => {
 		fetch(`${import.meta.env.VITE_API_URL}/api/macarons`)
 			.then((res) => res.json())
 			.then((data) => setMacarons(data));
+		// Step 3: get all accessories
+		fetch(`${import.meta.env.VITE_API_URL}/api/accessories`)
+			.then((res) => res.json())
+			.then((data) => setAccessories(data));
 	}, []);
-
-	// Step 3: get all accessories
 
 	// Step 5: create filter state
 
@@ -30,6 +33,11 @@ function MacaronList() {
 					<select id="macaron-select">
 						<option value="">---</option>
 						{/* Step 4: add an option for each accessory */}
+						{accessories.map((accessory) => (
+							<option key={accessory.id} value={accessory.slug}>
+								{accessory.name}
+							</option>
+						))}
 					</select>
 				</label>
 			</form>
