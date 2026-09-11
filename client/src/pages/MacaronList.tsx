@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Macaron from "../components/Macaron";
 
 /* ************************************************************************* */
@@ -60,7 +61,9 @@ function MacaronList() {
 					.map((macaron) => {
 						return (
 							<li key={macaron.id} className="macaron-item">
-								<Macaron data={macaron} />
+								<Link to={`/macarons/${macaron.id}`}>
+									<Macaron data={macaron} />
+								</Link>
 							</li>
 						);
 					})}
