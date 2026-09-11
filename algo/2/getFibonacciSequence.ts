@@ -5,14 +5,31 @@ Détails
 
 * La suite de Fibonacci commence par les nombres 0 et 1.
 * Chaque nombre suivant est la somme des deux nombres précédents.
-* Par exemple, pour n = 5, la fonction devrait retourner [0, 1, 1, 2, 3].
+* Par exemple, pour n = 5, la fonction devrait retourner [0, 1, 1, 2, 3, 5].
 
 Si n est inférieur ou égal à 0, la fonction doit retourner un tableau vide []
 */
 
 function getFibonacciSequence(size: number): number[] {
-  // Ton code ici !
-  return [0, 1];
+	if (size <= 0) {
+		return [];
+	}
+
+	if (size === 1) {
+		return [0];
+	}
+
+	if (size === 2) {
+		return [0, 1];
+	}
+
+	let fibonacci = [0, 1];
+	for (let index = 0; index < size - 2; index++) {
+		fibonacci.push(
+			fibonacci[fibonacci.length - 1] + fibonacci[fibonacci.length - 2],
+		);
+	}
+	return fibonacci;
 }
 
 export default getFibonacciSequence;
